@@ -1,0 +1,376 @@
+﻿<!DOCTYPE html>
+<html>
+<head>  
+    <meta charset="UTF-8">  
+    <title>Tower of Hanoi</title>  
+<script type="text/javascript" >
+    "use strict";
+    var myTimer = null;
+    var moveInfo;
+    var moveInc = 1;
+    var speed;
+
+
+
+    var callStack;
+
+    var barsInfo = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
+
+    var diskPosTop, diskPosLeft, DiskID;
+
+    window.onload = function ()
+    {   diskPosTop = new Array();
+        diskPosLeft = new Array();
+        DiskID = [disk0, disk1, disk2, disk3, disk4, disk5, disk6, disk7, disk8, disk9, disk10, disk11, disk12, disk13]
+        for (var i = 0; i < 14; i++)
+        {  diskPosTop[i] = DiskID[i].style.top; 
+           diskPosLeft[i] = DiskID[i].style.left; } 
+
+    } 
+
+    function executeHanoi()
+     {
+        var speed = parseInt(speedSelectList.options[speedSelectList.selectedIndex].value);
+        var  diskCount = parseInt(diskSelectList.options[diskSelectList.selectedIndex].value);
+        // alert(diskCount);
+        // var diskCount =3;
+
+        // Move Disks to start column  
+        for (var i = 0; i < 14; i++)
+        {  DiskID[i].style.top = diskPosTop[i];
+           DiskID[i].style.left= diskPosLeft[i];
+        } 
+  
+        barsInfo[0].disks = ['disk0', 'disk1', 'disk2', 'disk3', 'disk4', 'disk5'
+            , 'disk6', 'disk7', 'disk8', 'disk9', 'disk10', 'disk11', 'disk12', 'disk13'];
+        //alert(barsInfo[0].disks.pop().id);
+        barsInfo[1].disks = [];
+        barsInfo[2].disks = [];
+        barsInfo[3].disks = [];
+        barsInfo[4].disks = [];
+        barsInfo[5].disks = [];
+        barsInfo[6].disks = [];
+        barsInfo[7].disks = [];
+        barsInfo[8].disks = [];
+        barsInfo[9].disks = [];
+        barsInfo[10].disks = [];
+        barsInfo[11].disks = [];
+        barsInfo[12].disks = [];
+        barsInfo[13].disks = [];
+
+        switch (diskCount) {
+            case 3: barsInfo[0].disks.pop(); barsInfo[0].disks.pop();
+                disk3.style.display = "none"; disk4.style.display = "none"; break;
+
+            case 4: barsInfo[0].disks.pop();
+                disk4.style.display = "none"; break;
+        }
+
+        callStack = [];  // callStack array is global
+
+        Hanoi();
+
+        moveDisk(); // moveDisk takes its parameters from callStack
+    }
+
+
+    function Hanoi() {
+        callStack.push([0, 1]);
+        callStack.push([0, 2]);
+        callStack.push([0, 3]);
+        callStack.push([1, 2]);
+        callStack.push([0, 1]);
+        callStack.push([3, 1]);
+        callStack.push([0, 3]);
+        callStack.push([1, 0]);
+        callStack.push([1, 3]);
+        callStack.push([0, 3]);
+        callStack.push([0, 1]);
+        callStack.push([2, 0]);
+        callStack.push([2, 3]);
+        callStack.push([0, 3]);
+        callStack.push([0, 2]);
+        callStack.push([1, 2]);
+        callStack.push([0, 1]);
+        callStack.push([2, 0]);
+        callStack.push([2, 1]);
+        callStack.push([0, 1]);
+        callStack.push([0, 2]);
+        callStack.push([1, 2]);
+        callStack.push([1, 0]);
+        callStack.push([2, 0]);
+        callStack.push([1, 2]);
+        callStack.push([0, 1]);
+        callStack.push([0, 2]);
+        callStack.push([1, 2]);
+        callStack.push([0, 1]);
+        callStack.push([3, 0]);
+        callStack.push([3, 1]);
+        callStack.push([0, 1]);
+        callStack.push([3, 2]);
+        callStack.push([3, 0]);
+        callStack.push([2, 0]);
+        callStack.push([3, 2]);
+        callStack.push([0, 3]);
+        callStack.push([0, 2]);
+        callStack.push([1, 0]);
+        callStack.push([3, 2]);
+        callStack.push([1, 2]);
+        callStack.push([0, 2]);
+        callStack.push([0, 3]);
+        callStack.push([1, 3]);
+        callStack.push([0, 1]);
+        callStack.push([3, 0]);
+        callStack.push([3, 1]);
+        callStack.push([0, 1]);
+        callStack.push([0, 3]);
+        callStack.push([1, 3]);
+        callStack.push([1, 0]);
+        callStack.push([3, 0]);
+        callStack.push([1, 3]);
+        callStack.push([0, 1]);
+        callStack.push([0, 3]);
+        callStack.push([1, 3]);
+        callStack.push([0, 1]);
+        callStack.push([3, 0]);
+        callStack.push([3, 1]);
+        callStack.push([0, 1]);
+        callStack.push([3, 0]);
+        callStack.push([1, 3]);
+        callStack.push([1, 0]);
+        callStack.push([3, 0]);
+        callStack.push([3, 1]);
+        callStack.push([0, 1]);
+        callStack.push([0, 3]);
+        callStack.push([1, 3]);
+        callStack.push([0, 1]);
+        callStack.push([3, 0]);
+        callStack.push([2, 0]);
+        callStack.push([3, 1]);
+        callStack.push([2, 1]);
+        callStack.push([0, 1]);
+        callStack.push([2, 3]);
+        callStack.push([2, 0]);
+        callStack.push([3, 0]);
+        callStack.push([2, 3]);
+        callStack.push([0, 2]);
+        callStack.push([0, 3]);
+        callStack.push([1, 0]);
+        callStack.push([2, 3]);
+        callStack.push([1, 3]);
+        callStack.push([0, 3]);
+        callStack.push([0, 1]);
+        callStack.push([2, 0]);
+        callStack.push([2, 1]);
+        callStack.push([0, 1]);
+        callStack.push([2, 0]);
+        callStack.push([1, 2]);
+        callStack.push([1, 0]);
+        callStack.push([2, 0]);
+        callStack.push([2, 1]);
+        callStack.push([0, 1]);
+        callStack.push([0, 2]);
+        callStack.push([1, 2]);
+        callStack.push([0, 1]);
+        callStack.push([2, 0]);
+        callStack.push([2, 1]);
+        callStack.push([0, 1]);
+        callStack.push([3, 0]);
+        callStack.push([3, 1]);
+        callStack.push([3, 2]);
+        callStack.push([0, 2]);
+        callStack.push([3, 0]);
+        callStack.push([1, 0]);
+        callStack.push([3, 1]);
+        callStack.push([0, 3]);
+        callStack.push([0, 1]);
+        callStack.push([2, 0]);
+        callStack.push([2, 1]);
+        callStack.push([3, 1]);
+        callStack.push([0, 1]);
+    }
+
+
+    function moveDisk() {
+        if (callStack.length == 0) return;
+
+        var param = callStack.shift();  // Get call parameters from callStack
+        // Note: throughout the code, I use fromBar, toBar to refer to towers
+        var  fromBar = param[0];
+        var toBar = param[1];
+
+        var elem = document.getElementById(barsInfo[fromBar].disks.pop());  // find top elemnet in fromBar
+
+        moveInfo = { elem: elem,
+            fromBar: fromBar,
+            toBar: toBar,
+            whichPos: "top", // element position property for movement
+            dir: -1,  // 1 or -1
+            state: "up", // move upward
+            endPos: 60    // end position (in pixels) for move upward
+        }
+
+        myTimer = setInterval(animateMove, speed); // Start animation
+    }
+
+    function animateMove() {
+        var elem = moveInfo.elem;
+        var dir = moveInfo.dir;
+
+        var pos = parseInt(elem[(moveInfo.whichPos == "left") ? "offsetLeft" : "offsetTop"]);
+
+        if (((dir == 1) && (pos >= moveInfo.endPos)) || ((dir == -1) && (pos <= moveInfo.endPos))) {  // alert(moveInfo.state); 
+            if (moveInfo.state == "up") {
+                moveInfo.state = "hor";
+                moveInfo.whichPos = "left";
+                moveInfo.dir = 1;
+                if (moveInfo.fromBar > moveInfo.toBar) moveInfo.dir = -1;
+                //alert("toBar:" + moveInfo.toBar);
+                var toBar = document.getElementById("bar" + moveInfo.toBar);
+                // Next line: 15px is half of tower width    
+                moveInfo.endPos = toBar.offsetLeft - Math.floor(elem.offsetWidth / 2) + 15;
+                return;
+            }
+
+            else if (moveInfo.state == "hor") // move down
+            {
+                moveInfo.state = "down";
+                moveInfo.whichPos = "top";
+                moveInfo.dir = 1;
+                //alert(elem.offsetHeight);
+                moveInfo.endPos = document.getElementById("bottombar").offsetTop - (barsInfo[moveInfo.toBar].disks.length + 1) * elem.offsetHeight;
+                return;
+            }
+
+            else // end of current call to moveDisk, issue next call
+            {
+                clearInterval(myTimer);  // cancel timer 
+                barsInfo[moveInfo.toBar].disks.push(elem.id);
+                moveDisk();
+                return;
+            }
+        }
+
+
+        // Move Disk
+        pos = pos + dir * moveInc;
+        elem.style[moveInfo.whichPos] = pos + "px";
+
+        // Move the inside middle image
+        if (moveInfo.state == "up") {
+            var fromBar = document.getElementById("bar" + moveInfo.fromBar);
+            if (elem.offsetTop < fromBar.offsetTop) {
+                var x = elem.getElementsByClassName("insideImg")[0].offsetHeight;
+                if (x > 0) elem.getElementsByClassName("insideImg")[0].style.height = x - moveInc + "px";
+            }
+        }
+
+        if (moveInfo.state == "down") {
+            var toBar = document.getElementById("bar" + moveInfo.toBar);
+            if (elem.offsetTop > toBar.offsetTop) {
+                var x = elem.getElementsByClassName("insideImg")[0].offsetHeight;
+                if (x < 14) elem.getElementsByClassName("insideImg")[0].style.height = x + moveInc + "px";
+            }
+        }
+
+    }
+
+</script>
+
+<style> 
+  
+ #container { position:absolute; top:30px; left:20px; border:1px solid black; height:350px; width:1080px; }
+
+ #bar0 { position:absolute; top:100px; left:130px; height:200px; width:30px; }
+
+ #bar1 { position:absolute; top:100px; left:360px; height:200px; width:30px; }
+
+ #bar2 { position:absolute; top:100px; left:600px; height:200px; width:30px; }
+
+ #bar3 { position:absolute; top:100px; left:860px; height:200px; width:30px; }
+
+ .disk { padding:0; margin:0; position:absolute; border:1px solid gray; height:13px; 
+         -moz-box-sizing:border-box; box-sizing:border-box; border-radius:4px;}
+
+ /* left of disk0 at 35px; left = 130 (bar0 left) -w/2 + 15 (bar width/2)  */
+ #disk0  { top:287px; left:35px;background: #19194d; width:220px;  } 
+ #disk1 { top:274px; left:40px;background:#202060; width:210px; }
+ #disk2 { top:261px; left:45px;background:#262673; width:200px; }  
+ #disk3 { top:248px; left:50px;background:#2d2d86; width:190px; }
+ #disk4 { top:235px; left:55px;background:#333399; width:180px;  }
+ #disk5 { top:222px; left:60px;background:#3939ac; width:170px;  }
+ #disk6 { top:209px; left:65px;background:#4040bf; width:160px;  }
+ #disk7 { top:196px; left:70px;background:#5353c6; width:150px;  }
+ #disk8 { top:183px; left:75px;background:#6666cc; width:140px;  }
+ #disk9 { top:170px; left:80px;background:#7979d2; width:130px;  }
+ #disk10 { top:157px; left:85px;background:#9f9fdf; width:120px;  }
+ #disk11 { top:144px; left:90px;background:#b3b3e6; width:110px;  }
+ #disk12 { top:131px; left:95px;background:#c6c6ec; width:100px;  }
+ #disk13 { top:118px; left:100px;background:#d9d9f2; width:90px;  }
+
+
+
+
+ #bottombar { position:absolute; top:300px; left:10px;background:#222; border:1px solid black; height:30px; width:1000px; }
+  
+ label { float:right; width:100px; margin-top:8px;}
+
+ button { float:right; margin-top:26px; margin-right:16px; padding:2px 8px; height:28px;}
+
+ img { height:200px; width:30px; padding:0; margin:0; } /* for towers (bars) */
+ 
+.insideImg { z-index:100; position:absolute; border:0;top:-1px; height:14px; width:30px; }
+</style>  
+  
+</head>
+<body>
+
+    <div id="container">
+
+
+        <div id="bar0"><img src="Bar.png" /></div>
+
+        <div id="bar1"><img src="Bar.png" /></div>
+
+        <div id="bar2"><img src="Bar.png" /></div>
+
+        <div id="bar3"><img src="Bar.png" /></div>
+
+        <div id="bottombar"></div>
+
+        <div class="disk" id="disk0"></div>
+        <div class="disk" id="disk1"></div>
+        <div class="disk" id="disk2"></div>
+        <div class="disk" id="disk3"></div>
+        <div class="disk" id="disk4"></div>
+        <div class="disk" id="disk5"></div>
+        <div class="disk" id="disk6"></div>
+        <div class="disk" id="disk7"></div>
+        <div class="disk" id="disk8"></div>
+        <div class="disk" id="disk9"></div>
+        <div class="disk" id="disk10"></div>
+        <div class="disk" id="disk11"></div>
+        <div class="disk" id="disk12"></div>
+        <div class="disk" id="disk13"></div>
+
+        <button onclick="executeHanoi()">Start</button>
+
+        <label>
+            Speed <select id="speedSelectList">
+                <option value="1">fast</option>
+                <option value="10">medium</option>
+                <option value="20">slow</option>
+            </select>
+        </label>
+
+        <label>
+            No. of Disks<select id="diskSelectList">
+                <option value="5">5 disks</option>
+                <option value="4">4 disks</option>
+                <option value="3">3 disks</option>
+            </select>
+        </label>
+    </div> 
+ 
+</body>
+</html>
